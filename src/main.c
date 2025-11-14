@@ -10,6 +10,7 @@
 #include <zephyr/bluetooth/hci.h>
 #include <zephyr/sys/byteorder.h>
 #include "peripherals/my_temp.h"
+#include "libraries/fuel_gauge_cr2430.h"
 
 int err;
 volatile uint32_t test_steps=0;
@@ -63,20 +64,17 @@ int main(void)
     err = bt_le_ext_adv_start(adv, BT_LE_EXT_ADV_START_DEFAULT);
     printk("err4=%d\r\n", err);
 
-    
     set_tx_power(BT_HCI_VS_LL_HANDLE_TYPE_ADV, 0, 7);
+
+    err = fuel_gauge_init(BATTERY_TYPE_LITHIUM_CR2032);
 
     while(1){
         test_steps++;
         test_bat=99;
         err = update_adv_custom_data(test_steps, test_bat);
-        err = measure_bat_mv(&bat_meas_mv);
-        err = get_temperature(&chip_temp);
+        err = fuel_gauge_update(&state_of_charge);        
+        printk("SOC = %.2f%%     \r", state_of_charge);
 
-        printk("BAT meas = %dmV ||", bat_meas_mv);
-        if(chip_temp<300.0){
-            printk("Temperature = %.2fC         \r", chip_temp);
-        }
         k_sleep(K_MSEC(1000));
     }
     return 0;

@@ -5,6 +5,7 @@
         "nrf_ficr.h": "c",
         "hci_vs.h": "c",
         "my_adc.h": "c",
-        "nrfx_temp.h": "c"
+        "nrfx_temp.h": "c",
+        "nrf_fuel_gauge.h": "c"
     }
 }
