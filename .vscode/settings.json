@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "ble_adv.h": "c",
+        "gap.h": "c",
+        "nrf_ficr.h": "c",
+        "hci_vs.h": "c",
+        "my_adc.h": "c",
+        "nrfx_temp.h": "c"
+    }
+}

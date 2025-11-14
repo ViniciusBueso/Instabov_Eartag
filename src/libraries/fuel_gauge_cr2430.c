@@ -1,0 +1,1 @@
+#include "fuel_gauge_cr2430.h"

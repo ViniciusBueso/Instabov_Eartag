@@ -1,0 +1,4 @@
+#ifndef FUEL_GAUGE_CR2430_H
+#define FUEL_GAUGE_CR2430_H
+
+#endif
