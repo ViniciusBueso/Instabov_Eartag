@@ -58,21 +58,24 @@ int main(void)
 	err = bt_enable(NULL);
     printk("err2=%d\r\n", err);
 
+    //Configure advertising procedure and packet (Extended with CODED PHY [S=8])
     err = configure_ext_adv();
     printk("err3=%d\r\n", err);
 
+    //Start advertising procedure
     err = bt_le_ext_adv_start(adv, BT_LE_EXT_ADV_START_DEFAULT);
     printk("err4=%d\r\n", err);
 
+    //Configure TX power
     set_tx_power(BT_HCI_VS_LL_HANDLE_TYPE_ADV, 0, 7);
 
+    //Initialize fuel gauge to estimate battery lvl
     err = fuel_gauge_init(BATTERY_TYPE_LITHIUM_CR2032);
 
     while(1){
         test_steps++;
-        test_bat=99;
-        err = update_adv_custom_data(test_steps, test_bat);
-        err = fuel_gauge_update(&state_of_charge);        
+        err = fuel_gauge_update(&state_of_charge);       
+        err = update_adv_custom_data(test_steps, (uint8_t)state_of_charge); 
         printk("SOC = %.2f%%     \r", state_of_charge);
 
         k_sleep(K_MSEC(1000));
